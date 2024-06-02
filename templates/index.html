@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Product Search</title>
+</head>
+<body>
+    <h1>Amazon Product Search</h1>
+    <form id="asin-form">
+        <label for="asin">Enter ASIN:</label>
+        <input type="text" id="asin" name="asin">
+        <button type="submit">Search</button>
+    </form>
+    <div id="product-info"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#asin-form').submit(function(event) {
+                event.preventDefault();
+                var asin = $('#asin').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/get_product_info',
+                    data: { 'asin': asin },
+                    success: function(response) {
+                        $('#product-info').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
